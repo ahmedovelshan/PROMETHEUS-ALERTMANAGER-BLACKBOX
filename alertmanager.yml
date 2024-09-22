@@ -1,0 +1,25 @@
+# vim /etc/alertmanager/alertmanager.yml
+  ---
+  route:
+    group_by: [ 'alertname' ]
+    group_wait: 30s
+    group_interval: 5m
+    repeat_interval: 1h
+    receiver: 'email-notifications'
+  receivers:
+    - name: 'email-notifications'
+      email_configs:
+        - to: ahmedovelshan@gmail.com
+          from: monitoring@gmal.com
+          smarthost: 'smtp.gmail.com:587'
+          auth_username: monitoring@gmail.com
+          auth_identity: monitoring@gmail.com
+          auth_password: "YourPasswordHere"
+          send_resolved: true
+
+  inhibit_rules:
+    - source_match:
+        severity: 'critical'
+      target_match:
+        severity: 'warning'
+      equal: ['alertname', 'dev', 'instance']
