@@ -5,3 +5,7 @@ sudo useradd --no-create-home --shell /bin/false prometheus
 sudo mkdir /etc/prometheus /var/lib/prometheus
 sudo cp prometheus promtool /usr/local/bin/
 sudo cp -r consoles/ console_libraries/ /etc/prometheus/
+#After configuration prometheus.service and prometheus.yml file run below command to enable and start service
+sudo systemctl daemon-reload
+sudo systemctl start prometheus
+sudo systemctl enable prometheus
