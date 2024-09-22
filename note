@@ -1,0 +1,96 @@
+https://shubzz.hashnode.dev/comprehensive-devops-monitoring-prometheus-node-exporter-blackbox-alert-manager-with-email-notifications
+https://devconnected.com/how-to-install-and-configure-blackbox-exporter-for-prometheus/
+ Prometheus
+Role: Central Monitoring and Metrics Collection System
+Purpose: Prometheus is the core component that scrapes metrics from different sources and stores them in a time-series database. It periodically collects data from the systems or services it monitors (using exporters like Node Exporter) and provides query capabilities for analysis.
+Key Features:
+Data Collection: Prometheus pulls metrics from different endpoints (such as Node Exporter) at regular intervals (e.g., every 15 seconds or 1 minute).
+Time-Series Database: Stores collected metrics with timestamps for efficient querying and graphing.
+Flexible Querying: Prometheus supports a powerful query language called PromQL, which allows you to filter and aggregate data for monitoring and visualization.
+Visualization: Can display metrics in simple graphs, and it integrates with other tools like Grafana for richer dashboards.
+Alerts: Prometheus can define alerting rules that specify when something goes wrong (e.g., CPU load is too high or memory usage is too low).
+Example Use Case:
+Prometheus might track metrics like CPU load, memory usage, disk I/O, or request latency from web applications and systems. You can use PromQL to query for specific trends, such as detecting if the CPU load exceeds 80% over the last 5 minutes.
+
+2. Node Exporter
+Role: System Metrics Collector
+Purpose: Node Exporter is an agent that runs on the systems (servers, virtual machines, etc.) and collects system-level metrics such as CPU usage, memory consumption, disk space, network bandwidth, etc. It exposes these metrics to Prometheus for scraping.
+Key Features:
+System-Level Metrics: Provides detailed insights into system performance. Metrics include CPU load, memory usage, disk space, network statistics, and more.
+Exporter: It is specifically designed to be a lightweight and efficient "exporter" of system metrics, making it ideal for monitoring Linux-based systems.
+Example Use Case:
+Node Exporter might be installed on every server in your environment to track core health metrics like:
+
+CPU utilization over time.
+Available disk space on critical partitions.
+Network packet transfer rates.
+Prometheus will then scrape these metrics and store them for historical analysis and alerting.
+
+3. Alertmanager
+Role: Alerts and Notification Manager
+Purpose: Alertmanager is responsible for managing alerts sent by Prometheus. When a specific condition (e.g., high CPU load, memory shortage) is met, Prometheus triggers an alert that is sent to Alertmanager. Alertmanager then handles routing, deduplication, silencing, and notification (such as email or chat messages).
+Key Features:
+Alert Handling: Receives alerts from Prometheus when certain conditions are met. It can also group and deduplicate alerts to avoid alert flooding.
+Alert Routing: Routes alerts based on defined rules. For example, critical infrastructure alerts can be routed to a certain team, while non-critical alerts go to a different team.
+Notification Channels: Integrates with different notification systems like email, Slack, PagerDuty, or other communication tools.
+Silencing: Allows you to silence certain alerts for specific times (e.g., during maintenance windows) to avoid unnecessary notifications.
+Example Use Case:
+If the CPU load on a server exceeds 90% for more than 5 minutes, Prometheus will trigger an alert. Alertmanager will receive this alert, route it to the appropriate team, and send a notification via email or Slack. If multiple alerts are generated from different systems, it can group them to reduce alert noise.
+
+Summary of Roles:
+Prometheus (Monitoring & Querying):
+
+Collects metrics from different systems.
+Stores metrics in a time-series database.
+Provides querying and visualization of metrics.
+Generates alerts based on predefined rules.
+Node Exporter (Metrics Collection):
+
+Gathers system-level metrics such as CPU, memory, disk, and network statistics.
+Exposes these metrics for Prometheus to scrape.
+Alertmanager (Alerting & Notification):
+
+Manages alert routing, deduplication, and silencing.
+Sends alerts via email, Slack, or other notification channels.
+How They Work Together:
+Node Exporter runs on your servers to collect system metrics.
+Prometheus scrapes metrics from Node Exporter, stores them in a time-series format, and defines alert rules based on certain conditions (e.g., CPU usage > 80%).
+If Prometheus detects a rule violation (such as a metric exceeding a threshold), it triggers an alert.
+Alertmanager receives this alert, applies routing and deduplication rules, and sends notifications to the appropriate teams (via email, Slack, etc.).
+By combining these components, you get a robust monitoring and alerting system that provides visibility into your infrastructure and services, enabling you to identify and resolve performance or reliability issues proactively.
+Blackbox Exporter is a specialized exporter for Prometheus that allows you to probe and monitor the availability and performance of external services over different network protocols. Unlike Node Exporter, which collects system-level metrics from the local machine, Blackbox Exporter is designed to test endpoints (websites, APIs, services) to ensure they are responding and available.
+
+Role in a Monitoring Environment:
+Blackbox Exporter acts as a probe that actively checks the health and performance of external services such as HTTP, HTTPS, DNS, TCP, and ICMP (ping).
+It provides the ability to monitor the availability, latency, and status of services that reside outside your immediate infrastructure, making it ideal for monitoring websites, external APIs, or network ports.
+Key Features of Blackbox Exporter:
+Probes for Different Protocols:
+
+HTTP/HTTPS Probes: Monitor the availability and response times of web services, check for HTTP status codes, SSL certificate expiration, etc.
+DNS Probes: Check DNS resolution times and ensure that DNS queries are being correctly resolved.
+TCP Probes: Monitor the connectivity and latency of TCP services.
+ICMP (Ping) Probes: Test if a host is reachable via ICMP (i.e., check if you can ping it).
+Highly Configurable:
+
+You can customize probes with specific parameters such as request methods (GET/POST), headers, or body content for HTTP probes.
+Timeout, retries, and detailed results for each probe can be specified.
+Service Uptime Monitoring:
+
+Uptime monitoring: Check if a service is online by pinging or sending requests at regular intervals.
+Latency monitoring: Measure how fast a service responds to requests.
+SSL certificate monitoring: Ensure HTTPS services have valid SSL certificates and are not expired or expiring soon.
+Integration with Prometheus:
+
+Prometheus scrapes the metrics exposed by Blackbox Exporter. You can configure Prometheus to alert based on probe results, such as if a service goes down, response times exceed a threshold, or DNS resolution fails.
+Example Use Cases for Blackbox Exporter:
+Website Monitoring:
+Ensure that your website or web application is online and responding correctly.
+Check that your SSL certificate is valid and has not expired.
+Monitor response times to detect performance issues.
+API Availability:
+Monitor REST APIs to verify that they are reachable and returning the correct status codes (like 200 OK).
+DNS Monitoring:
+Verify that DNS queries for your services are resolving to the correct IP addresses.
+Network Monitoring:
+Monitor services by checking the availability of TCP ports (like SSH, database connections, etc.).
+Ensure hosts are reachable using ICMP ping.
