@@ -1,3 +1,4 @@
+#vim /etc/systemd/system/node_exporter.service
 [Unit]
 Description=Prometheus Monitoring
 Wants=network-online.target
