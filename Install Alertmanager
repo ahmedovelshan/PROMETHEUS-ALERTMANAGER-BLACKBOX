@@ -4,3 +4,8 @@ cd alertmanager-0.25.0.linux-amd64
 sudo cp alertmanager amtool /usr/local/bin/
 sudo mkdir /etc/alertmanager
 sudo cp alertmanager.yml /etc/alertmanager/
+#After configuration alertmanager.yml and alertmanager.service run below command
+sudo useradd --no-create-home --shell /bin/false alertmanager
+sudo systemctl daemon-reload
+sudo systemctl start alertmanager
+sudo systemctl enable alertmanager
